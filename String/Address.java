@@ -1,0 +1,16 @@
+package javaProgram;
+
+ class Address {
+
+	
+	    String city, state, country;
+
+	     Address(String city, String state, String country) {
+	        this.city = city;
+	        this.state = state;
+	        
+	    }
+	}
+
+	
+
