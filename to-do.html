@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple To-Do List</title>
+</head>
+<body>
+  <h2>My To-Do List</h2>
+
+  <input type="text" id="taskInput" placeholder="Enter a task" />
+  <button onclick="addTask()">Add Task</button>
+  <p id="error" style="color:red;"></p>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Task</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="taskTable"></tbody>
+  </table>
+
+  <script>
+    let tasks = []; // Array to store task objects
+
+    function addTask() {
+      const taskText = document.getElementById("taskInput").value.trim();
+      const error = document.getElementById("error");
+
+      // Check if input is empty
+      if (taskText === "") {
+        error.textContent = "Task cannot be empty!";
+        return;
+      }
+
+      // Check if task already exists
+      let duplicate = tasks.some(task => task.name.toLowerCase() === taskText.toLowerCase());
+      if (duplicate) {
+        error.textContent = "Task already exists!";
+        return;
+      }
+
+      // Clear error and add task to array
+      error.textContent = "";
+      tasks.push({ name: taskText });
+
+      // Clear input box
+      document.getElementById("taskInput").value = "";
+
+      // Show updated task list
+      showTasks();
+    }
+
+    function showTasks() {
+      const table = document.getElementById("taskTable");
+      table.innerHTML = ""; // Clear old table
+
+      tasks.forEach((task, index) => {
+        let row = `<tr>
+          <td>${index + 1}</td>
+          <td>${task.name}</td>
+          <td><button onclick="deleteTask(${index})">Delete</button></td>
+        </tr>`;
+        table.innerHTML += row;
+      });
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1); // Remove task from array
+      showTasks(); // Update table
+    }
+  </script>
+</body>
+</html>
